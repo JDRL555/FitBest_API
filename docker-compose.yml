@@ -1,0 +1,56 @@
+services:
+  # Servidor Web (Nginx)
+  api:
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - php
+      - mysql
+
+  # Intérprete de PHP
+  php:
+    build: 
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    volumes:
+      - ./src:/var/www/html
+
+  # Base de Datos
+  mysql:
+    image: mysql:8.0
+    env_file:
+      - .env.docker
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Interfaz para ver la base de datos
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+
+  # Herramientas (Se ejecutan y se apagan)
+  composer:
+    image: composer:latest
+    volumes:
+      - ./src:/app
+    working_dir: /app
+    entrypoint: ["composer"]
+
+  artisan:
+    build: 
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    volumes:
+      - ./src:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
+
+volumes:
+  db_data:
