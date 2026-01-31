@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\User\Gender;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,8 +21,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'gender',
+        'birth_date',
+        'weight_kg',
+        'height_m'
     ];
 
     /**
@@ -43,6 +50,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'gender' => Gender::class
         ];
     }
 }
