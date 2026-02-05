@@ -2,7 +2,7 @@
 
 namespace App\Enums\Exercise;
 
-enum EquipmentType
+enum EquipmentType: string
 {
     case BAR = 'bar';
     case DUMBELL = 'dumbell';

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Exercise;
 
-enum Category
+enum Category: string
 {
     case PUSH = 'push';
     case PULL = 'pull';

@@ -14,14 +14,9 @@ class Exercise extends Model
   // optional: overwrite the $table property to indicate which table it has to be related to
   protected $table = "exercises";
 
-  // fields that can be manipulated in the app
-  protected $fillable = [
-    'name', 
-    'description', 
-    'category', 
-    'equipment_type', 
-    'image_reference_url'  
-  ];
+  // fields that can't be manipulated in the app
+  // if this array is empty, all fields are mass assignable (fillable prop)
+  protected $guarded = [];
 
 
   // conversion of fields with some stricted type
