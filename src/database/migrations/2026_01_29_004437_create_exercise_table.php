@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
 
             $table->enum('category', ['push', 'pull', 'legs', 'core']);
-            $table->enum('equipment_type', ["bar", "dumbell", "machine", "cable", "bodyweight", "other"]);
+            $table->enum('equipment_type', ["bar", "dumbbell", "machine", "cable", "bodyweight", "other"]);
 
             $table->string('image_reference_url');
 

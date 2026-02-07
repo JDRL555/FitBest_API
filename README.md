@@ -59,7 +59,7 @@ docker-compose run --rm artisan key:generate
 Prepare the database:
 
 ```bash
-docker-compose run --rm artisan migrate
+docker-compose run --rm artisan migrate --seed
 ```
 
 ## 🔌 Service Access

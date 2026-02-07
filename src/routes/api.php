@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ExerciseController;
-
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 $default_api_routes = ['index', 'show', 'store', 'update', 'destroy'];
@@ -18,4 +18,6 @@ Route::get('/status', function () {
 // });
 
 // CRUD routes for Exercise resource - In only one route declaration
+Route::resource('users', UserController::class)->only($default_api_routes);
+
 Route::resource('exercises', ExerciseController::class)->only($default_api_routes);
