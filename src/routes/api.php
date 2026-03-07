@@ -2,13 +2,10 @@
 
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route;
 
 $default_api_routes = ['index', 'show', 'store', 'update', 'destroy'];
-
-Route::get('/status', function () {
-    return response()->json(['status' => 'ok']);
-});
 
 // Prefix to create a route group. in this case, /exercises/ , /exercises/3, etc
 // Route::prefix("exercises")->group(function () {
@@ -17,7 +14,9 @@ Route::get('/status', function () {
 //     Route::post("/", [ExerciseController::class, "create"]);
 // });
 
-// CRUD routes for Exercise resource - In only one route declaration
-Route::resource('users', UserController::class)->only($default_api_routes);
+Route::post('/login', [AuthController::class, 'login'])->name("login");
 
-Route::resource('exercises', ExerciseController::class)->only($default_api_routes);
+Route::middleware("auth:sanctum")->group(function () use ($default_api_routes) {
+    Route::resource('users', UserController::class)->only($default_api_routes);
+    Route::resource('exercises', ExerciseController::class)->only($default_api_routes);
+});
