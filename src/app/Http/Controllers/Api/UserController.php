@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Support\ApiFormatter;
 
 class UserController extends Controller
 {
@@ -19,11 +19,7 @@ class UserController extends Controller
     {
         $users = User::with('routine')->get();
 
-        return response()->json([
-            'message' => '',
-            'success' => true,
-            'data' => $users
-        ]);
+        return response()->json(ApiFormatter::response('', 200, $users), 200);
     }
 
     /**
@@ -35,11 +31,7 @@ class UserController extends Controller
 
         User::create($newUser);
 
-        return response()->json([
-            'message' => 'Usuario creado exitosamente!',
-            'success' => true,
-            'data' => $newUser
-        ], 201);
+        return response()->json(ApiFormatter::response('Usuario creado exitosamente!', 201, $newUser), 201);
     }
 
     /**
@@ -49,11 +41,9 @@ class UserController extends Controller
     {
         $user = User::with('routine')->find($id);
 
-        return response()->json([
-            'message' => !$user ? 'Usuario no encontrado' : '',
-            'success' => boolval($user),
-            'data' => $user
-        ], !$user ? 404 : 200);
+        $status = !$user ? 404 : 200;
+        $message = !$user ? 'Usuario no encontrado' : '';
+        return response()->json(ApiFormatter::response($message, $status, $user), $status);
     }
 
     /**
@@ -66,20 +56,12 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado',
-                'success' => false,
-                'data' => null
-            ], 404);
+            return response()->json(ApiFormatter::response('Usuario no encontrado', 404), 404);
         };
 
         $user->update($updatedUser);
 
-        return response()->json([
-            'message' => 'Usuario actualizado exitosamente!',
-            'success' => true,
-            'data' => $user
-        ], 200);
+        return response()->json(ApiFormatter::response('Usuario actualizado exitosamente!', 200, $user), 200);
     }
 
     /**
@@ -90,19 +72,11 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado',
-                'success' => false,
-                'data' => null
-            ], 404);
+            return response()->json(ApiFormatter::response('Usuario no encontrado', 404), 404);
         };
 
         $user->delete();
 
-        return response()->json([
-            'message' => 'Usuario eliminado exitosamente!',
-            'success' => true,
-            'data' => null
-        ], 200);
+        return response()->json(ApiFormatter::response('Usuario eliminado exitosamente!', 200), 200);
     }
 }

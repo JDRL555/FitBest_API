@@ -24,6 +24,18 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        if($this->isMethod("PUT")) {
+            return [
+                'name' => 'required|string|max:50|min:5',
+                'username' => 'required|string|max:30|unique:users,username',
+                'email' => 'required|email|max:255|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+                'gender' => ['required', new Enum(Gender::class)],
+                'birth_date' => 'required|date|before:today',
+                'weight_kg' => 'required|numeric',
+                'height_m' => 'required|numeric'
+            ];
+        }
         return [
             'name' => 'nullable|string|max:50|min:5',
             'username' => 'nullable|string|max:30|unique:users,username',

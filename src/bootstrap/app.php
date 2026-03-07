@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Http\HttpStatusMessage;
+use App\Support\ApiFormatter;
 use App\Support\StatusCodeHandler;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -10,9 +11,9 @@ use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        api: __DIR__ . '/../routes/api.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
@@ -27,21 +28,19 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return $request->expectsJson();
         });
-        
+
         $exceptions->render(function (Throwable $e, Request $request) {
             if ($request->is('api/*')) {
-                
+
                 $status = StatusCodeHandler::getStatusCode($e);
                 $message = HttpStatusMessage::tryFrom($status)?->message() ?? 'Error desconocido';
             }
 
-            $responseData = [
-                'success' => false,
-                'message' => $status === 500 ? "$message: " . $e->getMessage() : $message ?? $e->getMessage(),
-                'status' => $status ?? 500,
-            ];
+            $message = $status === 500 ? "$message: " . $e->getMessage() : $message ?? $e->getMessage();
 
-            if($e instanceof ValidationException) {
+            $responseData = ApiFormatter::response($message, $status ?? 500);
+
+            if ($e instanceof ValidationException) {
                 $responseData['errors'] = $e->errors();
             }
 

@@ -1,12 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Exercise;
-
-use App\Enums\Exercise\Category;
-use App\Enums\Exercise\EquipmentType;
+namespace App\Http\Requests\Routine;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
 
 class UpdateRequest extends FormRequest
 {
@@ -27,20 +23,18 @@ class UpdateRequest extends FormRequest
     {
         if($this->isMethod("PUT")) {
             return [
+                'user_id' => 'required|integer|exists:users,id',
                 'name' => 'required|string|max:50|min:3',
-                'description' => 'required|string|max:100|min:10',
-                'category' => ['required', new Enum(Category::class)],
-                'equipment_type' => ['required', new Enum(EquipmentType::class)],
-                'image_reference_url' => 'required|url'
+                'description' => 'nullable|string|max:100|min:10',
+                'current_routine' => 'nullable|boolean|default:false'
             ];
         }
 
         return [
+            'user_id' => 'nullable|integer|exists:users,id',
             'name' => 'nullable|string|max:50|min:3',
             'description' => 'nullable|string|max:100|min:10',
-            'category' => ['nullable', new Enum(Category::class)],
-            'equipment_type' => ['nullable', new Enum(EquipmentType::class)],
-            'image_reference_url' => 'nullable|url'
-        ]; 
+            'current_routine' => 'nullable|boolean|default:false'
+        ];
     }
 }

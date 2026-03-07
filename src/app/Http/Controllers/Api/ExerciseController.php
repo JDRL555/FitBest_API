@@ -11,6 +11,7 @@ use App\Models\Exercise;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use App\Support\ApiFormatter;
 
 class ExerciseController extends Controller
 {
@@ -18,11 +19,9 @@ class ExerciseController extends Controller
     {
         $exercises = Exercise::all();
 
-        return response()->json([
-            'message' => '',
-            'success' => true,
-            'data' => $exercises
-        ]);
+        return response()->json(
+            ApiFormatter::response('', 200, $exercises), 200
+        );
     }
 
     public function store(StoreRequest $request): JsonResponse
@@ -31,22 +30,16 @@ class ExerciseController extends Controller
 
         Exercise::create($newExercise);
 
-        return response()->json([
-            'message' => 'Ejercicio creado exitosamente!',
-            'success' => true,
-            'data' => $newExercise
-        ], 201);
+        return response()->json(ApiFormatter::response('Ejercicio creado exitosamente!', 201, $newExercise), 201);
     }
 
     public function show(string $id): JsonResponse
     {
         $exercise = Exercise::find($id);
 
-        return response()->json([
-            'message' => !$exercise ? 'Ejercicio no encontrado' : '',
-            'success' => boolval($exercise),
-            'data' => $exercise
-        ], !$exercise ? 404 : 200);
+        $status = !$exercise ? 404 : 200;
+        $message = !$exercise ? 'Ejercicio no encontrado' : '';
+        return response()->json(ApiFormatter::response($message, $status, $exercise), $status);
     }
 
     public function update(UpdateRequest $request, string $id): JsonResponse
@@ -54,20 +47,12 @@ class ExerciseController extends Controller
         $exercise = Exercise::find($id);
 
         if (!$exercise) {
-            return response()->json([
-                'message' => 'Ejercicio no encontrado',
-                'success' => false,
-                'data' => null
-            ], 404);
+            return response()->json(ApiFormatter::response('Ejercicio no encontrado', 404), 404);
         }
 
         $exercise->update($request->validated());
 
-        return response()->json([
-            'message' => 'Ejercicio actualizado exitosamente!',
-            'success' => true,
-            'data' => $exercise
-        ], 200);
+        return response()->json(ApiFormatter::response('Ejercicio actualizado exitosamente!', 200, $exercise), 200);
     }
 
     public function destroy(string $id): JsonResponse
@@ -75,19 +60,11 @@ class ExerciseController extends Controller
         $exercise = Exercise::find($id);
 
         if (!$exercise) {
-            return response()->json([
-                'message' => 'Ejercicio no encontrado',
-                'success' => false,
-                'data' => null
-            ], 404);
+            return response()->json(ApiFormatter::response('Ejercicio no encontrado', 404), 404);
         }
 
         $exercise->delete();
 
-        return response()->json([
-            'message' => 'Ejercicio eliminado exitosamente!',
-            'success' => true,
-            'data' => null
-        ], 200);
+        return response()->json(ApiFormatter::response('Ejercicio eliminado exitosamente!', 200), 200);
     }
 }

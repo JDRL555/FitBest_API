@@ -7,7 +7,6 @@ use App\Enums\Exercise\Category;
 use App\Enums\Exercise\EquipmentType;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Uri;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Exercise extends Model
@@ -32,7 +31,6 @@ class Exercise extends Model
   public function routines(): BelongsToMany
   {
       return $this->belongsToMany(Routine::class, 'routines_exercises')
-                  ->withPivot('order')
                   ->withTimestamps();
   }
 }
