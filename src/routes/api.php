@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoutineController;
-
+use App\Http\Controllers\Api\WorkoutController;
 use Illuminate\Support\Facades\Route;
 
 $default_api_routes = ['index', 'show', 'store', 'update', 'destroy'];
@@ -29,5 +29,6 @@ Route::middleware("auth:sanctum")->group(function () use ($default_api_routes) {
     Route::resource('users', UserController::class)->only($default_api_routes);
     Route::resource('exercises', ExerciseController::class)->only($default_api_routes);
     Route::resource('routines', RoutineController::class)->only($default_api_routes);
+    Route::resource('workouts', WorkoutController::class)->only($default_api_routes);
 
 });

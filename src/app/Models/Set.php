@@ -3,8 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Set extends Model
 {
-    //
+    public $table = 'sets';
+
+    public $guarded = [];
+
+    public function workout(): BelongsTo
+    {
+        return $this->belongsTo(Workout::class);
+    }
 }
