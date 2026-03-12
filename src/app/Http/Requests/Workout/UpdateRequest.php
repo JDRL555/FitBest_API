@@ -25,16 +25,18 @@ class UpdateRequest extends FormRequest
         if($this->isMethod("PUT")) {
             return [
                 'user_id' => 'required|exists:users,id',
-                'start_time' => 'required|date_format:H:i:s',
-                'end_time' => 'required|date_format:H:i:s',
+                'routine_id' => 'required|exists:routines,id',
+                'start_at' => 'required|date_format:Y-m-d H:i',
+                'end_at' => 'required|date_format:Y-m-d H:i|after:start_at',
                 'notes' => 'nullable|string'
             ];
         }
         
         return [
             'user_id' => 'nullable|exists:users,id',
-            'start_time' => 'nullable|date_format:H:i:s',
-            'end_time' => 'nullable|date_format:H:i:s',
+            'routine_id' => 'required|exists:routines,id',
+            'start_at' => 'nullable|date_format:Y-m-d H:i',
+            'end_at' => 'nullable|date_format:Y-m-d H:i|after:start_at',
             'notes' => 'nullable|string'
         ];
     }

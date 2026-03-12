@@ -7,6 +7,7 @@ use App\Http\Requests\Workout\StoreRequest;
 use App\Http\Requests\Workout\UpdateRequest;
 use App\Models\Workout;
 use App\Support\ApiFormatter;
+use DateTime;
 
 class WorkoutController extends Controller
 {
@@ -15,7 +16,7 @@ class WorkoutController extends Controller
      */
     public function index()
     {
-        $workouts = Workout::with("user")->get();
+        $workouts = Workout::with(["user", "routine", "sets.exercise"])->get();
 
         return response()->json(ApiFormatter::response("", 200, $workouts), 200);
     }
@@ -26,6 +27,15 @@ class WorkoutController extends Controller
     public function store(StoreRequest $request)
     {
         $new_workout = $request->validated();
+
+        $start_date = DateTime::createFromFormat('Y-m-d H:i', $new_workout['start_at']);
+        $end_date = DateTime::createFromFormat('Y-m-d H:i', $new_workout['end_at']);
+
+        if($start_date->format('Y-m-d') != $end_date->format('Y-m-d')) {
+            return response()->json(
+                ApiFormatter::response("Las fechas del entrenamiento deben ser el mismo dia", 400), 400
+            );
+        }
 
         $workout = Workout::create($new_workout);
 

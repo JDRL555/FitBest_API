@@ -25,6 +25,9 @@ class StoreRequest extends FormRequest
             'user_id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:50|min:3',
             'description' => 'nullable|string|max:100|min:10',
+            'days' => 'required|array',
+            'days.*' => 'array',
+            'days.*.*' => 'integer|exists:exercises,id',
             'current_routine' => 'nullable|boolean|default:false'
         ];
     }

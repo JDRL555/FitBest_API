@@ -45,11 +45,11 @@ class ExerciseSeeder extends Seeder
         ]);
 
         Exercise::create([
-            'name' => 'Press inclinado en barra',
+            'name' => 'Press inclinado en maquina',
             'description' => 'Ejercicio que trabaja el pecho alto, los hombros y los tríceps.',
             'category' => 'push',
-            'equipment_type' => 'bar',
-            'image_reference_url' => 'https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Incline-Barbell-Bench-Press_dc0c6279-d038-44f5-a682-54c2a5e2602c_600x600.png?v=1612137944',
+            'equipment_type' => 'machine',
+            'image_reference_url' => 'https://training.fit/wp-content/uploads/2020/02/schraegbankdruecken-maschine.png',
         ]);
 
         Exercise::create([
@@ -210,6 +210,14 @@ class ExerciseSeeder extends Seeder
             'category' => 'legs',
             'equipment_type' => 'machine',
             'image_reference_url' => 'https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Standing-Calf-Raise_61746b47-98aa-49ee-bb97-5a19562592b9_600x600.png?v=1612137090',
+        ]);
+
+        Exercise::create([
+            'name' => 'Curl de biceps en barra Z',
+            'description' => 'Ejercicio para aislar biceps.',
+            'category' => 'pull',
+            'equipment_type' => 'bar',
+            'image_reference_url' => 'https://cdn.shopify.com/s/files/1/0269/5551/3900/files/EZ-Barbell-Curl_42cb566b-6415-4318-94e0-c93f4b442e59_600x600.png?v=1612137227',
         ]);
     }
 }

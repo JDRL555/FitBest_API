@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('weight_count', 4, 1)->nullable();
             $table->enum('weight_type', ["kg", "bars"])->nullable();
 
-            $table->integer('set');
+            $table->integer('sets');
 
             $table->timestamps();
         });

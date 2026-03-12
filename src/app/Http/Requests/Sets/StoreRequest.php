@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Workout;
+namespace App\Http\Requests\Sets;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,11 +22,12 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'routine_id' => 'required|exists:routines,id',
-            'start_at' => 'required|date_format:Y-m-d H:i',
-            'end_at' => 'required|date_format:Y-m-d H:i|after:start_at',
-            'notes' => 'nullable|string'
+            'workout_id' => 'required|integer|exists:workouts,id',
+            'exercise_id' => 'required|integer|exists:exercises,id',
+            'reps' => 'required|integer|min:1',
+            'sets' => 'required|integer|min:1|max:6',
+            'weight_count' => 'nullable|numeric|min:1',
+            'weight_type' => 'nullable|in:kg,bars',
         ];
     }
 }

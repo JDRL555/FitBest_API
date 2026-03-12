@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('workouts', function (Blueprint $table) {
-            $table->time('start_time')->change();
-            $table->time('end_time')->change();
+            $table->dropColumn('start_time');
+            $table->dropColumn('end_time');
+
+            $table->dateTime('start_at')->after('routine_id');
+            $table->dateTime('end_at')->after('start_at');
         });
     }
 
@@ -23,8 +26,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('workouts', function (Blueprint $table) {
-            $table->timestamp('start_time')->change();
-            $table->timestamp('end_time')->change();
+            $table->dropColumn('start_at');
+            $table->dropColumn('end_at');
+
+            $table->time('start_time')->after('routine_id');
+            $table->time('end_time')->after('start_time');
         });
     }
 };

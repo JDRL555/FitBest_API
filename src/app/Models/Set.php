@@ -15,4 +15,9 @@ class Set extends Model
     {
         return $this->belongsTo(Workout::class);
     }
+
+    public function exercise(): BelongsTo
+    {
+        return $this->belongsTo(Exercise::class);
+    }
 }

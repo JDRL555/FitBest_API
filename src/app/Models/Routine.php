@@ -11,6 +11,11 @@ class Routine extends Model
 {
     protected $guarded = [];
 
+    public function routineExercises()
+    {
+        return $this->hasMany(RoutineExercise::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -24,6 +29,7 @@ class Routine extends Model
     public function exercises(): BelongsToMany
     {
         return $this->belongsToMany(Exercise::class, 'routines_exercises')
+                    ->withPivot('day')
                     ->withTimestamps();
     }
 }

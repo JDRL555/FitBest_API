@@ -20,9 +20,36 @@ class RoutineSeeder extends Seeder
         ]);
 
         $routine->exercises()->attach([
-            1,2,3,4,5,6,7,8,9,10,
-            11,12,13,14,15,16,17,18,19,20,
-            21,22,23,24,25
+            4 => ['day' => 'monday'],
+            5 => ['day' => 'monday'],
+            6 => ['day' => 'monday'],
+            7 => ['day' => 'monday'],
+            8 => ['day' => 'monday'],
+            9 => ['day' => 'monday'],
+            10 => ['day' => 'tuesday'],
+            11 => ['day' => 'tuesday'],
+            12 => ['day' => 'tuesday'],
+            13 => ['day' => 'wednesday'],
+            14 => ['day' => 'wednesday'],
+            15 => ['day' => 'wednesday'],
+            16 => ['day' => 'wednesday'],
+            17 => ['day' => 'wednesday'],
+            18 => ['day' => 'wednesday'],
+            19 => ['day' => 'wednesday'],
+            20 => ['day' => 'wednesday'],
+            21 => ['day' => 'thursday'],
+            22 => ['day' => 'thursday'],
+            23 => ['day' => 'thursday'],
+            24 => ['day' => 'thursday'],
+            25 => ['day' => 'thursday'],
+            4 => ['day' => 'friday'],
+            5 => ['day' => 'friday'],
+            6 => ['day' => 'friday'],
+            26 => ['day' => 'friday'],
+            8 => ['day' => 'friday'],
+            9 => ['day' => 'friday'],
+            19 => ['day' => 'friday'],
+            20 => ['day' => 'friday'],
         ]);
     }
 }

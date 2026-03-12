@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('routines_exercises', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('routine_id')->constrained('routines', 'id');
-            $table->foreignId('exercise_id')->constrained('exercises', 'id');
-            
-            $table->integer('order')->default(0);
-            
+            $table->foreignId('routine_id')->constrained('routines')->onDelete('cascade');
+            $table->foreignId('exercise_id')->constrained('exercises')->onDelete('cascade');
+            $table->string('day');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('routines_exercises');
+        Schema::dropIfExists('routine_exercises');
     }
 };

@@ -17,6 +17,11 @@ class Workout extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function routine(): BelongsTo
+    {
+        return $this->belongsTo(Routine::class);
+    }
+
     public function sets(): HasMany
     {
         return $this->hasMany(Set::class);
