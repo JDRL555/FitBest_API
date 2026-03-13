@@ -29,6 +29,13 @@ class UpdateRequest extends FormRequest
                 'days' => 'required|array',
                 'days.*' => 'array',
                 'days.*.*' => 'integer|exists:exercises,id',
+                'days' => [function ($attribute, $value, $fail) {
+                    $validDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                    
+                    foreach (array_keys($value) as $day) {
+                        if (!in_array($day, $validDays)) $fail("El día {$day} no es válido.");
+                    }
+                }],
                 'current_routine' => 'nullable|boolean|default:false'
             ];
         }
@@ -40,6 +47,13 @@ class UpdateRequest extends FormRequest
             'days' => 'required|array',
             'days.*' => 'array',
             'days.*.*' => 'integer|exists:exercises,id',
+            'days' => [function ($attribute, $value, $fail) {
+                $validDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                
+                foreach (array_keys($value) as $day) {
+                    if (!in_array($day, $validDays)) $fail("El día {$day} no es válido.");
+                }
+            }],
             'current_routine' => 'nullable|boolean|default:false'
         ];
     }
